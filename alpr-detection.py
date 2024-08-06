@@ -5,7 +5,6 @@
 # Local imports
 from utils.VariableClass import VariableClass
 from utils.ClassificationObject import ClassificationObject
-from utils.AnnotateFrame import annotate_frame, annotate_bbox_frame
 
 # External imports
 import os
