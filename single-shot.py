@@ -122,7 +122,7 @@ while (predicted_frames < var.MAX_NUMBER_OF_PREDICTIONS) and (frame_number < MAX
                     break
 
                 # Annotate the frame with the classification objects.
-                # @TODO
+                # Draw the class name and the confidence on the frame.
 
                 cv2.rectangle(
                     img=annotated_frame,
