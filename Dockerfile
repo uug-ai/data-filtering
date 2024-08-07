@@ -40,7 +40,7 @@ COPY . .
 ENV MEDIA_SAVEPATH "/ml/data/input/input_video.mp4"
 
 # Model parameters
-ENV MODEL_NAME "yolov8n-seg.pt"
+ENV MODEL_NAME "yolov8n.pt"
 
 # Queue parameters
 ENV QUEUE_NAME "" 
@@ -72,11 +72,6 @@ ENV RETURN_JSON_SAVEPATH "/ml/data/output/output_json.json"
 ENV TIME_VERBOSE "True"
 ENV LOGGING "True"
 
-ENV FIND_DOMINANT_COLORS "False"
-ENV COLOR_PREDICTION_INTERVAL "1"
-ENV MIN_CLUSTERS "3"
-ENV MAX_CLUSTERS "3"
-
 # Classification parameters
 ENV CLASSIFICATION_FPS ""
 ENV CLASSIFICATION_THRESHOLD ""
@@ -88,6 +83,6 @@ ENV ALLOWED_CLASSIFICATIONS "0, 1, 2, 3, 5, 7, 14, 15, 16, 24, 26, 28"
 
 
 # Run the application
-ENTRYPOINT ["python" , "object_classification_yolov8.py"]
+ENTRYPOINT ["python" , "queue_filter.py"]
 
 
