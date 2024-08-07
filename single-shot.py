@@ -97,8 +97,7 @@ while (predicted_frames < var.MAX_NUMBER_OF_PREDICTIONS) and (frame_number < MAX
             source=frame,
             persist=True,
             verbose=False,
-            conf=var.CLASSIFICATION_THRESHOLD,
-            classes=var.ALLOWED_CLASSIFICATIONS)
+            conf=var.CLASSIFICATION_THRESHOLD)
         if var.TIME_VERBOSE:
             total_time_class_prediction += time.time() - start_time_class_prediction
 
