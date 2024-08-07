@@ -6,3 +6,4 @@ yolov8n-seg.pt
 yolov8n.pt
 utils/__pycache__
 run.sh
+data/video
