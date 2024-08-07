@@ -8,7 +8,7 @@
             "name": "Python Debugger: queue reader",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/alpr-detection.py",
+            "program": "${workspaceFolder}/queue_filter.py",
             "console": "integratedTerminal",
             "envFile": "${workspaceFolder}/.env",
             "python": "${workspaceFolder}/venv/bin/python" 
