@@ -18,3 +18,22 @@ One of the most important steps in data science or the development of machine le
 In most cases, data scientists spend a significant amount of their time finding the correct data, and this is typically a very time-consuming task. Especially in the world of video, typically terabytes of data are analyzed or labeled manually, and most of the time the correct dataset is not readily available. To make it even worse, machine learning models require up-to-date training data, which means that collecting data is not a one-time job; it's a continuous process that never stops. This means that the developers of these models require an automated and smart approach for creating those datasets. This is where data filtering becomes crucial for the concept of automated dataset harvesting.
 
 Automated dataset harvesting involves using algorithms and tools to continuously collect, filter, and update datasets to ensure they meet the required criteria for training machine learning models. This approach not only saves time but also ensures that the data remains relevant and high-quality, which is essential for the success of any machine learning project.
+
+## What's in this project
+
+This project includes a Python program, `queue_filter.py`, which leverages the YOLOv8 framework to analyze recordings stored in the local Kerberos Vault. Whenever a recording is stored, Kerberos Vault sends an event/message to the RabbitMQ message broker. The `queue_filter.py` script reads these events from RabbitMQ, downloads the relevant recordings from Kerberos Vault, and processes them using the YOLOv8 model via the `processFrame` function.
+
+    condition = "4 persons detected"
+    frame, total_time_class_prediction, conditionMet = processFrame(
+        MODEL, frame, video_out, condition)
+
+    if conditionMet:
+        print(
+            "Condition met, stopping the video loop, and forwarding video to remote vault")
+        # @TODO: Forward the video to the remote vault.
+        break
+
+    # Increase the frame_number and predicted_frames by one.
+    predicted_frames += 1
+
+Upon evaluation, the `processFrame` function attempts to identify a match based on specified conditions, such as detecting "4 persons" or "10 cars." If the YOLOv8 model successfully detects, for instance, 4 persons or 10 cars, the function will return a positive match. Consequently, an API call will be made to request Kerberos Vault to forward the recording to the remote Kerberos Vault.
