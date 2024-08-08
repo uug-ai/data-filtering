@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datafilter
+  labels:
+    app: datafilter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: datafilter
+  template:
+    metadata:
+      labels:
+        app: datafilter
+    spec:
+      containers:
+        - name: datafilter
+          image: uugai/data-filter:latest
+          resources:
+            limits:
+              nvidia.com/gpu: 1 # requesting a single GPU
+          env:
+            - name: QUEUE_NAME
+              value: "data-filtering" # This is the topic of the queue (Kerberos Vault sends a message to this topic, and the data filter listens to this topic)
+            - name: QUEUE_HOST
+              value: rabbitmq-broker.xxx.xxx:5672
+            - name: QUEUE_EXCHANGE
+            - name: QUEUE_USERNAME
+              value: xxxx
+            - name: QUEUE_PASSWORD
+              value: xxx
+
+            - name: STORAGE_URI
+              value: "https://vault.xxx.xx/api"
+            - name: STORAGE_ACCESS_KEY
+              value: "xxx"
+            - name: STORAGE_SECRET_KEY
+              value: "xxx"
+
+            - name: MODEL_NAME
+              value: "yolov8n.pt"
+
+            - name: MEDIA_SAVEPATH
+              value: "/ml/data/input/video.mp4"
+
+            - name: LOGGING
+              value: "True"
+            - name: PLOT
+              value: "False"
+            - name: SAVE_VIDEO
+              value: "True"
+            - name: OUTPUT_MEDIA_SAVEPATH
+              value: "/ml/data/input/output_video.mp4"
+
+
+            - name: TIME_VERBOSE
+              value: "True"
+
+            - name: CLASSIFICATION_FPS
+              value: "3"
+            - name: CLASSIFICATION_THRESHOLD
+              value: "0.3"
+            - name: MAX_NUMBER_OF_PREDICTIONS
+              value: "100"
+            - name: ALLOWED_CLASSIFICATIONS
+              value: "0, 1, 2, 3, 5, 7, 14, 15, 16, 24, 26, 28"

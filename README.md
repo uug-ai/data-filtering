@@ -28,8 +28,7 @@ This project includes a Python program, `queue_filter.py`, which leverages the Y
         MODEL, frame, video_out, condition)
 
     if conditionMet:
-        print(
-            "Condition met, stopping the video loop, and forwarding video to remote vault")
+        print("Condition met, stopping the video loop, and forwarding video to remote vault")
         # @TODO: Forward the video to the remote vault.
         break
 

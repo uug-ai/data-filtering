@@ -2,8 +2,7 @@
 venv
 data/input/*
 data/output/*
-yolov8n-seg.pt
-yolov8n.pt
 utils/__pycache__
 run.sh
 data/video
+.env.production

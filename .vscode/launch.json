@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/queue_filter.py",
             "console": "integratedTerminal",
-            "envFile": "${workspaceFolder}/.env",
+            "envFile": "${workspaceFolder}/.env.production",
             "python": "${workspaceFolder}/venv/bin/python" 
         },
         {
@@ -19,7 +19,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/single-shot.py",
             "console": "integratedTerminal",
-            "envFile": "${workspaceFolder}/.env",
+            "envFile": "${workspaceFolder}/.env.production",
             "python": "${workspaceFolder}/venv/bin/python" 
         }
     ]
