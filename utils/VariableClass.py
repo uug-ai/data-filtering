@@ -71,12 +71,12 @@ class VariableClass:
         if os.getenv("MAX_NUMBER_OF_PREDICTIONS") is not None:
             self.MAX_NUMBER_OF_PREDICTIONS = int(
                 os.getenv("MAX_NUMBER_OF_PREDICTIONS", "50"))
-        if os.getenv("MIN_DISTANCE") is not None:
+        if os.getenv("MIN_DISTANCE") is not None and os.getenv("MIN_DISTANCE") != "":
             self.MIN_DISTANCE = int(os.getenv("MIN_DISTANCE", "500"))
-        if os.getenv("MIN_STATIC_DISTANCE") is not None:
+        if os.getenv("MIN_STATIC_DISTANCE") is not None and os.getenv("MIN_STATIC_DISTANCE") != "":
             self.MIN_STATIC_DISTANCE = int(
                 os.getenv("MIN_STATIC_DISTANCE", "100"))
-        if os.getenv("MIN_DETECTIONS") is not None:
+        if os.getenv("MIN_DETECTIONS") is not None and os.getenv("MIN_DETECTIONS") != "":
             self.MIN_DETECTIONS = int(os.getenv("MIN_DETECTIONS", "5"))
 
         ALLOWED_CLASSIFICATIONS_STR = os.getenv("ALLOWED_CLASSIFICATIONS")
