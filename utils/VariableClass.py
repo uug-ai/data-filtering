@@ -2,17 +2,16 @@ import os
 from dotenv import load_dotenv
 
 
-
 class VariableClass:
     """This class is used to store all the environment variables in a single class. This is done to make it easier to access the variables in the code.
-    
+
     """
 
     def __init__(self):
         """This function is used to load all the environment variables and store them in the class.
 
         """
-        
+
         # Environment variables
         load_dotenv()
 
@@ -57,18 +56,29 @@ class VariableClass:
         self.OUTPUT_MEDIA_SAVEPATH = os.getenv("OUTPUT_MEDIA_SAVEPATH")
 
         self.FIND_DOMINANT_COLORS = os.getenv("FIND_DOMINANT_COLORS") == "True"
-        self.COLOR_PREDICTION_INTERVAL = int(os.getenv("COLOR_PREDICTION_INTERVAL"))
-        self.MIN_CLUSTERS = int(os.getenv("MIN_CLUSTERS"))
-        self.MAX_CLUSTERS = int(os.getenv("MAX_CLUSTERS"))
+        if os.getenv("COLOR_PREDICTION_INTERVAL") is not None:
+            self.COLOR_PREDICTION_INTERVAL = int(
+                os.getenv("COLOR_PREDICTION_INTERVAL"))
+        if os.getenv("MIN_CLUSTERS") is not None:
+            self.MIN_CLUSTERS = int(os.getenv("MIN_CLUSTERS"))
+        if os.getenv("MAX_CLUSTERS") is not None:
+            self.MAX_CLUSTERS = int(os.getenv("MAX_CLUSTERS"))
 
         # Classification parameters
         self.CLASSIFICATION_FPS = int(os.getenv("CLASSIFICATION_FPS"))
-        self.CLASSIFICATION_THRESHOLD = float(os.getenv("CLASSIFICATION_THRESHOLD"))
-        self.MAX_NUMBER_OF_PREDICTIONS = int(os.getenv("MAX_NUMBER_OF_PREDICTIONS"))
-        self.MIN_DISTANCE = int(os.getenv("MIN_DISTANCE"))
-        self.MIN_STATIC_DISTANCE = int(os.getenv("MIN_DISTANCE"))
-        self.MIN_DETECTIONS = int(os.getenv("MIN_DETECTIONS"))
+        self.CLASSIFICATION_THRESHOLD = float(
+            os.getenv("CLASSIFICATION_THRESHOLD"))
+        self.MAX_NUMBER_OF_PREDICTIONS = int(
+            os.getenv("MAX_NUMBER_OF_PREDICTIONS"))
+        if os.getenv("MIN_DISTANCE") is not None:
+            self.MIN_DISTANCE = int(os.getenv("MIN_DISTANCE"))
+        if os.getenv("MIN_STATIC_DISTANCE") is not None:
+            self.MIN_STATIC_DISTANCE = int(os.getenv("MIN_DISTANCE"))
+        if os.getenv("MIN_DETECTIONS") is not None:
+            self.MIN_DETECTIONS = int(os.getenv("MIN_DETECTIONS"))
         ALLOWED_CLASSIFICATIONS_STR = os.getenv("ALLOWED_CLASSIFICATIONS")
-        self.ALLOWED_CLASSIFICATIONS = [int(item.strip()) for item in ALLOWED_CLASSIFICATIONS_STR.split(',')]
+        self.ALLOWED_CLASSIFICATIONS = [
+            int(item.strip()) for item in ALLOWED_CLASSIFICATIONS_STR.split(',')]
         TRANSLATED_CLASSIFICATIONS_STR = os.getenv("ALLOWED_CLASSIFICATIONS")
-        self.TRANSLATED_CLASSIFICATIONS = [item.strip() for item in TRANSLATED_CLASSIFICATIONS_STR.split(',')]
+        self.TRANSLATED_CLASSIFICATIONS = [
+            item.strip() for item in TRANSLATED_CLASSIFICATIONS_STR.split(',')]

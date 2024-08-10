@@ -55,6 +55,9 @@ def init():
             continue
         if var.LOGGING:
             print('2) Retrieving media from Kerberos Vault')
+
+        mediaKey = message['payload']['key']
+        provider = message['source']
         resp = kerberos_vault.retrieve_media(
             message=message,
             media_type='video',
@@ -131,6 +134,45 @@ def init():
                 if conditionMet:
                     print(
                         "Condition met, stopping the video loop, and forwarding video to remote vault")
+
+                    forwardingMedia = os.getenv("FORWARDING_MEDIA", "false")
+                    if forwardingMedia == "true":
+
+                        # We will first send the metadata to Kerberos Hub
+                        headers = {
+                            'Content-Type': 'application/json',
+                            'X-Kerberos-Storage-FileName': '{0}'.format(mediaKey),
+                            'X-Kerberos-Storage-AccessKey': '{0}'.format(var.STORAGE_ACCESS_KEY),
+                            'X-Kerberos-Storage-SecretAccessKey': '{0}'.format(var.STORAGE_SECRET_KEY),
+                        }
+                        response = requests.post(
+                            var.STORAGE_URI + '/storage/forward/media',
+                            headers=headers,
+                        )
+                        if response.status_code != 200:
+                            print("Something went wrong while forwarding media")
+                        else:
+                            print("Forwarding media to " + var.STORAGE_URI)
+
+                    removeAfterProcessed = os.getenv(
+                        "REMOVE_AFTER_PROCESSED", "false")
+                    if removeAfterProcessed == "true":
+                        # Delete the recording from Kerberos Vault
+                        response = requests.delete(
+                            var.STORAGE_URI + '/storage',
+                            headers={
+                                'X-Kerberos-Storage-FileName': mediaKey,
+                                'X-Kerberos-Storage-Provider': provider,
+                                'X-Kerberos-Storage-AccessKey': var.STORAGE_ACCESS_KEY,
+                                'X-Kerberos-Storage-SecretAccessKey': var.STORAGE_SECRET_KEY,
+                            }
+                        )
+                        if response.status_code != 200:
+                            print(
+                                "Something went wrong while delete media: " + response.content)
+                        else:
+                            print("Delete media from " + var.STORAGE_URI)
+
                     # @TODO: Forward the video to the remote vault.
                     break
 
