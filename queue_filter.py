@@ -11,6 +11,7 @@ from utils.ClassificationObject import ClassificationObject
 import os
 import cv2
 import time
+import requests
 import torch
 from ultralytics import YOLO
 from uugai_python_dynamic_queue.MessageBrokers import RabbitMQ
@@ -139,8 +140,8 @@ def init():
                     print(
                         "Condition met, stopping the video loop, and forwarding video to remote vault")
 
-                    forwardingMedia = os.getenv("FORWARDING_MEDIA", "false")
-                    if forwardingMedia == "true":
+                    forwardingMedia = os.getenv("FORWARDING_MEDIA", "False")
+                    if forwardingMedia == "True":
 
                         # We will first send the metadata to Kerberos Hub
                         headers = {
@@ -158,25 +159,6 @@ def init():
                         else:
                             print("Forwarding media to " + var.STORAGE_URI)
 
-                    removeAfterProcessed = os.getenv(
-                        "REMOVE_AFTER_PROCESSED", "false")
-                    if removeAfterProcessed == "true":
-                        # Delete the recording from Kerberos Vault
-                        response = requests.delete(
-                            var.STORAGE_URI + '/storage',
-                            headers={
-                                'X-Kerberos-Storage-FileName': mediaKey,
-                                'X-Kerberos-Storage-Provider': provider,
-                                'X-Kerberos-Storage-AccessKey': var.STORAGE_ACCESS_KEY,
-                                'X-Kerberos-Storage-SecretAccessKey': var.STORAGE_SECRET_KEY,
-                            }
-                        )
-                        if response.status_code != 200:
-                            print(
-                                "Something went wrong while delete media: " + response.content)
-                        else:
-                            print("Delete media from " + var.STORAGE_URI)
-
                     # @TODO: Forward the video to the remote vault.
                     break
 
@@ -184,6 +166,26 @@ def init():
                 predicted_frames += 1
 
             frame_number += 1
+
+        # Delete the recording from Kerberos Vault if the REMOVE_AFTER_PROCESSED is set to True.
+        removeAfterProcessed = os.getenv(
+            "REMOVE_AFTER_PROCESSED", "False")
+        if removeAfterProcessed == "True":
+            # Delete the recording from Kerberos Vault
+            response = requests.delete(
+                var.STORAGE_URI + '/storage',
+                headers={
+                    'X-Kerberos-Storage-FileName': mediaKey,
+                    'X-Kerberos-Storage-Provider': provider,
+                    'X-Kerberos-Storage-AccessKey': var.STORAGE_ACCESS_KEY,
+                    'X-Kerberos-Storage-SecretAccessKey': var.STORAGE_SECRET_KEY,
+                }
+            )
+            if response.status_code != 200:
+                print(
+                    "Something went wrong while delete media: " + response.content)
+            else:
+                print("Delete media from " + var.STORAGE_URI)
 
         if var.TIME_VERBOSE:
             total_time_processing += time.time() - start_time_processing
