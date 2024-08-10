@@ -68,8 +68,9 @@ class VariableClass:
         self.CLASSIFICATION_FPS = int(os.getenv("CLASSIFICATION_FPS"))
         self.CLASSIFICATION_THRESHOLD = float(
             os.getenv("CLASSIFICATION_THRESHOLD"))
-        self.MAX_NUMBER_OF_PREDICTIONS = int(
-            os.getenv("MAX_NUMBER_OF_PREDICTIONS"))
+        if os.getenv("MAX_NUMBER_OF_PREDICTIONS") is not None:
+            self.MAX_NUMBER_OF_PREDICTIONS = int(
+                os.getenv("MAX_NUMBER_OF_PREDICTIONS"))
         if os.getenv("MIN_DISTANCE") is not None:
             self.MIN_DISTANCE = int(os.getenv("MIN_DISTANCE"))
         if os.getenv("MIN_STATIC_DISTANCE") is not None:
