@@ -65,18 +65,20 @@ class VariableClass:
             self.MAX_CLUSTERS = int(os.getenv("MAX_CLUSTERS"))
 
         # Classification parameters
-        self.CLASSIFICATION_FPS = int(os.getenv("CLASSIFICATION_FPS"))
+        self.CLASSIFICATION_FPS = int(os.getenv("CLASSIFICATION_FPS", "15"))
         self.CLASSIFICATION_THRESHOLD = float(
             os.getenv("CLASSIFICATION_THRESHOLD"))
         if os.getenv("MAX_NUMBER_OF_PREDICTIONS") is not None:
             self.MAX_NUMBER_OF_PREDICTIONS = int(
-                os.getenv("MAX_NUMBER_OF_PREDICTIONS"))
+                os.getenv("MAX_NUMBER_OF_PREDICTIONS", "50"))
         if os.getenv("MIN_DISTANCE") is not None:
-            self.MIN_DISTANCE = int(os.getenv("MIN_DISTANCE"))
+            self.MIN_DISTANCE = int(os.getenv("MIN_DISTANCE", "500"))
         if os.getenv("MIN_STATIC_DISTANCE") is not None:
-            self.MIN_STATIC_DISTANCE = int(os.getenv("MIN_DISTANCE"))
+            self.MIN_STATIC_DISTANCE = int(
+                os.getenv("MIN_STATIC_DISTANCE", "100"))
         if os.getenv("MIN_DETECTIONS") is not None:
-            self.MIN_DETECTIONS = int(os.getenv("MIN_DETECTIONS"))
+            self.MIN_DETECTIONS = int(os.getenv("MIN_DETECTIONS", "5"))
+
         ALLOWED_CLASSIFICATIONS_STR = os.getenv("ALLOWED_CLASSIFICATIONS")
         self.ALLOWED_CLASSIFICATIONS = [
             int(item.strip()) for item in ALLOWED_CLASSIFICATIONS_STR.split(',')]
