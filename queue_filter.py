@@ -86,20 +86,19 @@ def init():
             FileNotFoundError('Unable to open video file')
 
         # Initialize the video-writer if the SAVE_VIDEO is set to True.
-        if var.SAVE_VIDEO:
-            fourcc = cv2.VideoWriter.fourcc(*'avc1')
-            video_out = cv2.VideoWriter(
-                filename=var.OUTPUT_MEDIA_SAVEPATH,
-                fourcc=fourcc,
-                fps=var.CLASSIFICATION_FPS,
-                frameSize=(int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
-                           int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
-            )
+        fourcc = cv2.VideoWriter.fourcc(*'avc1')
+        video_out = cv2.VideoWriter(
+            filename=var.OUTPUT_MEDIA_SAVEPATH,
+            fourcc=fourcc,
+            fps=var.CLASSIFICATION_FPS,
+            frameSize=(int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
+                       int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+        )
 
         # Initialize the classification process.
         # 2 lists are initialized:
-            # Classification objects
-            # Additional list for easy access to the ids.
+        # Classification objects
+        # Additional list for easy access to the ids.
 
         # frame_number -> The current frame number. Depending on the frame_skip_factor this can make jumps.
         # predicted_frames -> The number of frames, that were used for the prediction. This goes up by one each prediction iteration.
@@ -211,7 +210,7 @@ def init():
             print('8) Releasing video writer and closing video capture')
             print("\n\n")
 
-        video_out.release() if var.SAVE_VIDEO else None
+        video_out.release()
         cap.release()
         cv2.destroyAllWindows()
 
