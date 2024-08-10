@@ -127,7 +127,12 @@ def init():
             # Check if the frame_number corresponds to a frame that should be classified.
             if frame_number > 0 and frame_skip_factor > 0 and frame_number % frame_skip_factor == 0:
 
-                condition = "4 persons detected"
+                # condition = "4 persons detected"
+                condition = os.getenv("CONDITION", "")
+                if condition == "":
+                    print("No condition set, exiting")
+                    break
+
                 frame, total_time_class_prediction, conditionMet = processFrame(
                     MODEL, frame, video_out, condition)
 
