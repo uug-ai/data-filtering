@@ -20,6 +20,7 @@ spec:
           resources:
             limits:
               nvidia.com/gpu: 1 # requesting a single GPU
+              nvidia.com/gpumem: 512 # Each vGPU contains 512m device memory
           env:
             - name: MODEL_NAME
               value: "yolov8n.pt"
